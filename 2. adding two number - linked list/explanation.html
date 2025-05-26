@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Two Numbers (Linked List) Problem Explanation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        p, ol, ul {
+            margin-bottom: 15px;
+        }
+        ol, ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        pre {
+            background-color: #2d2d2d; /* Dark background for code */
+            color: #f8f8f2; /* Light text for code */
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+        }
+        .problem-description, .solution-explanation, .code-examples {
+            margin-bottom: 30px;
+        }
+        .complexity {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Two Numbers (Linked List)</h1>
+
+        <div class="problem-description">
+            <h2>Problem Statement</h2>
+            <p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in <strong>reverse order</strong>, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.</p>
+            <p>You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
+            <p><strong>Example:</strong></p>
+            <p>Input: <code>l1 = [2,4,3]</code> (representing 342), <code>l2 = [5,6,4]</code> (representing 465)</p>
+            <p>Output: <code>[7,0,8]</code> (representing 807)</p>
+        </div>
+
+        <div class="solution-explanation">
+            <h2>Solution Explanation</h2>
+            <p>The problem requires us to add two numbers represented by linked lists, where each node holds a single digit and the digits are in reverse order. This reverse order is convenient because it's similar to how we manually add numbers: starting from the least significant digit (the rightmost digit), which is the head of the list in this case.</p>
+
+            <h3>Core Idea</h3>
+            <p>We simulate the process of column-by-column addition that we learn in elementary school. We'll iterate through both lists simultaneously, adding corresponding digits along with any carry from the previous addition. The result will be a new linked list representing the sum.</p>
+
+            <h3>Algorithm Steps</h3>
+            <ol>
+                <li><strong>Initialize a Dummy Head:</strong> Create a <code>dummyHead</code> node for the result list (e.g., <code>new ListNode(0)</code>). This node acts as a placeholder, making it easier to build the result list, especially for handling the first digit of the sum. We will return <code>dummyHead.next</code> as the actual head of the result.</li>
+                <li><strong>Initialize Pointers and Carry:</strong>
+                    <ul>
+                        <li>Set a <code>current</code> pointer to <code>dummyHead</code>. This pointer will be used to append new nodes to the result list.</li>
+                        <li>Initialize a <code>carry</code> variable to <code>0</code>. This will store the carry-over value if the sum of digits exceeds 9.</li>
+                        <li>Initialize pointers <code>p1</code> to the head of <code>l1</code> and <code>p2</code> to the head of <code>l2</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Iterate and Add:</strong> Loop as long as either <code>p1</code> is not null, <code>p2</code> is not null, or there is a <code>carry</code> greater than 0.
+                    <ol type="a">
+                        <li><strong>Get Digit Values:</strong>
+                            <ul>
+                                <li>Get the value from the current node of <code>l1</code> (<code>p1.val</code>). If <code>p1</code> is null (meaning <code>l1</code> is shorter or exhausted), consider its value as <code>0</code>.</li>
+                                <li>Similarly, get the value from the current node of <code>l2</code> (<code>p2.val</code>). If <code>p2</code> is null, consider its value as <code>0</code>.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Calculate Sum:</strong> Calculate the <code>sum</code> for the current position: <code>sum = value_from_l1 + value_from_l2 + carry</code>.</li>
+                        <li><strong>Update Carry:</strong> The new <code>carry</code> for the next iteration is <code>Math.floor(sum / 10)</code> (e.g., if sum is 17, carry is 1).</li>
+                        <li><strong>Create New Node:</strong> The digit to store in the new node of the result list is <code>sum % 10</code> (e.g., if sum is 17, the digit is 7). Create a new <code>ListNode</code> with this digit.</li>
+                        <li><strong>Append to Result:</strong> Attach this new node to <code>current.next</code>.</li>
+                        <li><strong>Advance Pointers:</strong>
+                            <ul>
+                                <li>Move <code>current</code> to the newly added node (<code>current = current.next</code>).</li>
+                                <li>If <code>p1</code> is not null, move it to the next node (<code>p1 = p1.next</code>).</li>
+                                <li>If <code>p2</code> is not null, move it to the next node (<code>p2 = p2.next</code>).</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li><strong>Return Result:</strong> After the loop finishes, the sum is fully computed. Return <code>dummyHead.next</code>, which points to the actual head of the resulting linked list.</li>
+            </ol>
+
+            <h3>Edge Cases</h3>
+            <ul>
+                <li><strong>Lists of Different Lengths:</strong> The algorithm naturally handles this by treating null nodes as having a value of 0. The loop continues as long as one list still has digits or there's a carry.</li>
+                <li><strong>Final Carry:</strong> If there's a carry remaining after iterating through both lists (e.g., adding <code>[5]</code> (5) and <code>[5]</code> (5) results in <code>[0,1]</code> (10)), the loop condition <code>carry > 0</code> ensures that an additional node is created for this final carry.</li>
+                <li><strong>Empty Input Lists:</strong> The problem statement says "non-empty linked lists," so we don't need to handle this. However, if they could be empty, the logic would still generally hold if null checks are robust.</li>
+            </ul>
+
+            <h3>Time and Space Complexity</h3>
+            <p class="complexity">
+                <strong>Time Complexity: O(max(m, n))</strong>, where <code>m</code> and <code>n</code> are the lengths of the two input linked lists (<code>l1</code> and <code>l2</code>). The algorithm iterates at most <code>max(m, n)</code> times.
+            </p>
+            <p class="complexity">
+                <strong>Space Complexity: O(max(m, n))</strong>. The length of the new linked list is at most <code>max(m, n) + 1</code> (the <code>+1</code> is for a potential final carry). This is the space used to store the result.
+            </p>
+        </div>
+
+        <div class="code-examples">
+            <h2>Code Examples</h2>
+
+            <h3>Java</h3>
+            <pre><code class="language-java">
+// Definition for singly-linked list.
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
+        ListNode p = l1, q = l2, current = dummyHead;
+        int carry = 0;
+
+        // Loop while either list has nodes or there's a carry
+        while (p != null || q != null || carry > 0) {
+            int x = (p != null) ? p.val : 0;
+            int y = (q != null) ? q.val : 0;
+            int sum = carry + x + y;
+            
+            carry = sum / 10; // Calculate new carry
+            current.next = new ListNode(sum % 10); // Create new node with the digit
+            current = current.next; // Move current pointer
+            
+            if (p != null) p = p.next; // Move p1 if not null
+            if (q != null) q = q.next; // Move p2 if not null
+        }
+        
+        // The problem statement was updated, the loop condition `|| carry > 0`
+        // handles the final carry correctly, so the explicit check after loop is not needed.
+        // if (carry > 0) {
+        //     current.next = new ListNode(carry);
+        // }
+        return dummyHead.next;
+    }
+}
+            </code></pre>
+            <p><em>Note: In the Java code snippet above, the main loop condition <code>while (p != null || q != null || carry > 0)</code> correctly handles the case where a final carry might exist. The original provided solution had a separate check for carry after the loop for `p != null || q != null`, which is also a valid way to implement it. The version here incorporates the carry check into the main loop for conciseness.</em></p>
+
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">
+// Definition for singly-linked list.
+function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val);
+    this.next = (next===undefined ? null : next);
+}
+
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var addTwoNumbers = function(l1, l2) {
+    let dummyHead = new ListNode(0);
+    let p = l1, q = l2, current = dummyHead;
+    let carry = 0;
+
+    // Loop while either list has nodes or there's a carry
+    while (p !== null || q !== null || carry > 0) {
+        const x = (p !== null) ? p.val : 0;
+        const y = (q !== null) ? q.val : 0;
+        const sum = carry + x + y;
+        
+        carry = Math.floor(sum / 10); // Calculate new carry
+        current.next = new ListNode(sum % 10); // Create new node with the digit
+        current = current.next; // Move current pointer
+        
+        if (p !== null) p = p.next; // Move p1 if not null
+        if (q !== null) q = q.next; // Move p2 if not null
+    }
+    
+    // As with Java, the loop condition `|| carry > 0` handles the final carry.
+    // if (carry > 0) {
+    //    current.next = new ListNode(carry);
+    // }
+    return dummyHead.next;
+};
+            </code></pre>
+        </div>
+    </div>
+</body>
+</html>

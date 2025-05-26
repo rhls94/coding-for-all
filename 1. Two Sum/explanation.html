@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Sum Problem Explanation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        p, ul {
+            margin-bottom: 15px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        pre {
+            background-color: #2d2d2d; /* Dark background for code */
+            color: #f8f8f2; /* Light text for code */
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+        }
+        .problem-description, .solution-explanation, .code-examples {
+            margin-bottom: 30px;
+        }
+        .complexity {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Two Sum Problem</h1>
+
+        <div class="problem-description">
+            <h2>Problem Statement</h2>
+            <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return the indices of the two numbers such that they add up to <code>target</code>.</p>
+            <p>You may assume that each input would have exactly one solution, and you may not use the same element twice. You can return the answer in any order.</p>
+            <p><strong>Example:</strong></p>
+            <p>Input: <code>nums = [2, 7, 11, 15]</code>, <code>target = 9</code></p>
+            <p>Output: <code>[0, 1]</code> (because <code>nums[0] + nums[1] == 9</code>)</p>
+        </div>
+
+        <div class="solution-explanation">
+            <h2>Solution Explanation (Hash Map Approach)</h2>
+            <p>The problem asks us to find two numbers in an array that sum up to a specific target. While a brute-force approach (checking every pair of numbers) is possible, it would be O(n<sup>2</sup>) in time complexity. We can achieve a more efficient solution using a hash map (or a <code>Map</code> in JavaScript, <code>HashMap</code> in Java).</p>
+            
+            <h3>Intuition</h3>
+            <p>The core idea is that for each number <code>x</code> in the array, we need to find if there's another number <code>y</code> such that <code>x + y = target</code>. This means <code>y = target - x</code>. The number <code>y</code> is often called the "complement."</p>
+            <p>A hash map is ideal for this because it provides very fast lookups (on average O(1) time complexity). As we iterate through the array, we can check if the complement of the current number has been seen before. If it has, we've found our pair. If not, we store the current number and its index in the hash map for future reference.</p>
+
+            <h3>Algorithm Steps</h3>
+            <ol>
+                <li>Initialize an empty hash map. This map will store numbers from the input array as keys and their indices as values (e.g., <code>{number: index}</code>).</li>
+                <li>Iterate through the input array <code>nums</code> one element at a time, keeping track of the current number and its index.</li>
+                <li>For each current number (let's call it <code>currentNum</code> at index <code>i</code>):
+                    <ol type="a">
+                        <li>Calculate its complement needed to reach the target: <code>complement = target - currentNum</code>.</li>
+                        <li>Check if this <code>complement</code> already exists as a key in the hash map.
+                            <ul>
+                                <li><strong>If yes:</strong> This means we have found the two numbers that sum up to the target. The first number is the <code>complement</code> (whose index is stored in the hash map), and the second number is <code>currentNum</code> (at index <code>i</code>). Return the index stored for the <code>complement</code> and the current index <code>i</code>.</li>
+                                <li><strong>If no:</strong> The complement has not been encountered yet. Store the <code>currentNum</code> and its index <code>i</code> in the hash map. This is done so that if a future number needs <code>currentNum</code> as its complement, we can find it.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li>If the loop completes and no pair has been found, it means no such pair exists that sums to the target. (Although, for this specific problem, the constraints guarantee that exactly one solution exists, so this step is more of a general consideration for similar problems).</li>
+            </ol>
+
+            <h3>Time and Space Complexity</h3>
+            <p class="complexity">
+                <strong>Time Complexity: O(n)</strong>. We iterate through the array <code>nums</code> only once. Each lookup and insertion in the hash map takes, on average, O(1) time.
+            </p>
+            <p class="complexity">
+                <strong>Space Complexity: O(n)</strong>. In the worst-case scenario, we might need to store all n elements of the array in the hash map (e.g., if the pair is found at the very end, or if no pair exists).
+            </p>
+        </div>
+
+        <div class="code-examples">
+            <h2>Code Examples</h2>
+
+            <h3>Java</h3>
+            <pre><code class="language-java">
+import java.util.HashMap;
+import java.util.Map;
+
+class TwoSum {
+    public int[] twoSum(int[] nums, int target) {
+        Map&lt;Integer, Integer&gt; numMap = new HashMap&lt;&gt;();
+        
+        for (int i = 0; i &lt; nums.length; i++) {
+            int complement = target - nums[i];
+            
+            if (numMap.containsKey(complement)) {
+                return new int[] { numMap.get(complement), i };
+            }
+            
+            numMap.put(nums[i], i);
+        }
+        
+        // According to the problem statement, a solution always exists,
+        // so this part should ideally not be reached.
+        // Returning an empty array or throwing an exception can be a fallback.
+        return new int[] {}; 
+    }
+}
+            </code></pre>
+
+            <h3>JavaScript</h3>
+            <pre><code class="language-javascript">
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+const twoSum = function(nums, target) {
+    const numMap = new Map(); // Use Map for better performance than an object for this use case
+    
+    for (let i = 0; i &lt; nums.length; i++) {
+        const complement = target - nums[i];
+        
+        if (numMap.has(complement)) {
+            return [numMap.get(complement), i];
+        }
+        
+        numMap.set(nums[i], i);
+    }
+    
+    // According to the problem statement, a solution always exists.
+    // Returning an empty array or throwing an error can be a fallback.
+    return []; 
+};
+            </code></pre>
+        </div>
+    </div>
+</body>
+</html>
