@@ -1,0 +1,80 @@
+{
+  "problemName": "Add Two Numbers (Linked List)",
+  "java": {
+    "sourceFile": "Solution.java",
+    "className": "Solution",
+    "methodName": "addTwoNumbers",
+    "inputs": [
+      {"name": "l1", "type": "ListNode"},
+      {"name": "l2", "type": "ListNode"}
+    ],
+    "outputType": "ListNode",
+    "testCases": [
+      {
+        "name": "Example 1: l1 = [2,4,3], l2 = [5,6,4]",
+        "args": [
+          {"val": 2, "next": {"val": 4, "next": {"val": 3, "next": null}}},
+          {"val": 5, "next": {"val": 6, "next": {"val": 4, "next": null}}}
+        ],
+        "expectedOutput": {"val": 7, "next": {"val": 0, "next": {"val": 8, "next": null}}},
+        "comparisonMode": "linkedListExact"
+      },
+      {
+        "name": "Example 2: l1 = [0], l2 = [0]",
+        "args": [
+          {"val": 0, "next": null},
+          {"val": 0, "next": null}
+        ],
+        "expectedOutput": {"val": 0, "next": null},
+        "comparisonMode": "linkedListExact"
+      },
+      {
+        "name": "Example 3: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]",
+        "args": [
+          {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": null}}}}}}},
+          {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": null}}}}
+        ],
+        "expectedOutput": {"val": 8, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 0, "next": {"val": 0, "next": {"val": 0, "next": {"val":1, "next":null}}}}}}}},
+        "comparisonMode": "linkedListExact"
+      }
+    ]
+  },
+  "javascript": {
+    "sourceFile": "solution.js",
+    "functionName": "addTwoNumbers",
+    "inputs": [
+      {"name": "l1", "type": "ListNode"},
+      {"name": "l2", "type": "ListNode"}
+    ],
+    "outputType": "ListNode",
+    "testCases": [
+       {
+        "name": "Example 1: l1 = [2,4,3], l2 = [5,6,4]",
+        "args": [
+          {"val": 2, "next": {"val": 4, "next": {"val": 3, "next": null}}},
+          {"val": 5, "next": {"val": 6, "next": {"val": 4, "next": null}}}
+        ],
+        "expectedOutput": {"val": 7, "next": {"val": 0, "next": {"val": 8, "next": null}}},
+        "comparisonMode": "linkedListExact"
+      },
+      {
+        "name": "Example 2: l1 = [0], l2 = [0]",
+        "args": [
+          {"val": 0, "next": null},
+          {"val": 0, "next": null}
+        ],
+        "expectedOutput": {"val": 0, "next": null},
+        "comparisonMode": "linkedListExact"
+      },
+      {
+        "name": "Example 3: l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]",
+        "args": [
+          {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": null}}}}}}},
+          {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": null}}}}
+        ],
+        "expectedOutput": {"val": 8, "next": {"val": 9, "next": {"val": 9, "next": {"val": 9, "next": {"val": 0, "next": {"val": 0, "next": {"val": 0, "next": {"val":1, "next":null}}}}}}}},
+        "comparisonMode": "linkedListExact"
+      }
+    ]
+  }
+}
